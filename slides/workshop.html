@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Workshop 01 - Introduction</title>
+		<link rel="stylesheet" href="../css/style.css">
+		<link rel="shortcut icon" href="">
+
+		<!-- Import Reveal's css-->
+		<link rel="stylesheet" href="../lib/css/reveal.min.css">
+		<link rel="stylesheet" href="../lib/css/reveal_theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../lib/css/github.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../lib/css/reveal_print/pdf.css' : '../lib/css/reveal_print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+        <style>
+            .reveal .slides {
+                text-align: left;
+            }
+            .reveal .slides section>* {
+                margin-left: 0;
+                margin-right: 0;
+            }
+		</style>
+	
+		<script src="../lib/js/head.min.js"></script>
+		<script src="../lib/js/reveal.min.js"></script>
+	</head>
+	<body>
+		<div class="reveal" style="background:url('../media/black-board.jpg');background-size:cover;">
+			<div class="slides">
+				<section data-markdown=""
+                         data-separator="---new slide---"
+                         data-separator-vertical="---new sub-slide---"
+                         data-separator-notes="---notes---:" >
+                </section>
+			</div>
+		</div>
+
+		<script>
+			var vars_pairs = window.location.search.substring(1).split("&");
+			var vars = {};
+			for (var i=0;i<vars_pairs.length;i++) {
+				vars[vars_pairs[i].split("=")[0]] = vars_pairs[i].split("=")[1]
+			}
+			var workshop_number = vars["id"]
+			document.querySelector(".slides section").setAttribute("data-markdown", "workshop_" + workshop_number + ".md");
+
+			Reveal.initialize({
+				width: 1440,
+				height: 900,
+				center: false, 
+				slideNumber: true,
+				transition: 'slide',
+				history: true,
+				dependencies: [
+					{ src: 'plugin/print-pdf/print-pdf.js' },
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/math/math.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
