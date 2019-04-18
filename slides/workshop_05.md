@@ -600,7 +600,11 @@ The test risk is: `$0.14$`
 
 Parameters for which we do not have an efficient way to optimally select.
 
+<br>
+
 `$K$` is an **hyper-parameters** of the model.
+
+<br>
 
 Three more hyper-parameters which we have encountered so far are:
 
@@ -608,9 +612,13 @@ Three more hyper-parameters which we have encountered so far are:
 - The kernel and width in KDE.
 - The $K$ in K-Means.
 
+---new slide---
+
+## Hyper-parameters - Cont.
+
 <br>
 
-Optional methods for selecting the hyper-parameters:
+Hyper-parameters are usually selected by:
 
 - Brute Force / Grid Search
 
@@ -620,7 +628,7 @@ Optional methods for selecting the hyper-parameters:
 
 ## The workflow revisited - Hyper-parameters
 
-<center><img src="../media/diagrams/workflow/workflow_clustering.png" style="width:450px"/></center>
+<center><img src="../media/diagrams/workflow/workflow_clustering.png" style="height:650px"/></center>
 
 ---new slide---
 
@@ -756,7 +764,7 @@ The optimal `$K$` is `$K=19$`.
 The validation risk is: `$0.097$`.
 
 <center><div style="display:inline-block;background-color:rgba(255, 255, 255, 0.7); box-shadow: 0 0 5px 10px rgba(255, 255, 255, 0.7)">
-<img src="../media/output/workshop_05/risk_vs_k2.png" style="height:500px"/>
+<img src="../media/output/workshop_05/risk_vs_k_validation.png" style="height:500px"/>
 </div></center>
 
 ---new slide---
@@ -775,3 +783,103 @@ print_math('The test risk is: ${:.2}$'.format(test_risk))
 <br>
 
 The test risk is: `$0.087$`.
+
+---new slide---
+
+## Cross-Validation
+
+- Using a 60%-20%-20% is using only 60% of the collected data.
+
+- Cross-validation attempts to partially solve this issue.
+
+<br>
+
+Method:
+
+- Split all the training data in to `$k$` equal groups.
+
+- Learn and evaluate the risk each time using a different group as the validation group.
+
+- The estimated risk is the average risks.
+
+---new slide---
+
+## Cross-Validation - Cont.
+
+<br>
+
+<center><img src="https://scikit-learn.org/stable/_images/grid_search_cross_validation.png" width="700px" style="width:700px"/></center>
+
+*Image taken from <a href="https://scikit-learn.org/stable/modules/cross_validation.html#cross-validation">SciKit Learn</a>*
+
+---new slide---
+
+## ⚙️ Learning
+
+<br>
+
+### ✍️ Exercise 5.4
+
+Repeat the process using cross-validation
+
+<br>
+
+Use SciKit-Learn's [cross_val_score](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.cross_val_score.html) function
+
+---new slide---
+
+#### Solution 5.4
+
+<br>
+
+```python
+## import cross_val_score
+from sklearn.model_selection import cross_val_score
+
+number_of_cross_validation_groups = 4
+risk_array = np.zeros((len(k_array), ))
+
+for i_k in range(len(k_array)):
+    knn = KNeighborsClassifier(n_neighbors=k_array[i_k])
+
+    risks = 1 - cross_val_score(knn, x, y, cv=number_of_cross_validation_groups)
+
+    risk_array[i_k] = risks.mean()
+
+optimal_index = np.argmin(risk_array)
+optimal_k = k_array[optimal_index]
+optimal_risk = risk_array[optimal_index]
+```
+
+---new slide---
+
+#### Solution 5.4 - Cont.
+
+<center><div style="display:inline-block;background-color:rgba(255, 255, 255, 0.7); box-shadow: 0 0 5px 10px rgba(255, 255, 255, 0.7)">
+<img src="../media/output/workshop_05/risk_vs_k_cv.png" style="height:500px"/>
+</div></center>
+
+<br>
+
+The optimal $K$ is `$K=22$`
+
+The validation risk is: `$0.09$`
+
+---new slide---
+
+## ⏱️ Performance evaluation
+
+<br>
+
+```python
+knn = KNeighborsClassifier(n_neighbors=optimal_k)
+knn.fit(x, y)
+
+predictions = knn.predict(x_test)
+test_risk = (y_test != predictions).mean()
+print_math('The test risk is: ${:.2}$'.format(test_risk))
+```
+
+<br>
+
+The test risk is: `$0.079$`
