@@ -13663,7 +13663,7 @@ $$
 <span class="n">n_samples_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">)</span>
 <span class="n">n_samples_test</span> <span class="o">=</span> <span class="n">n_samples</span> <span class="o">-</span> <span class="n">n_samples_train</span>
 <span class="n">train_indices</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[:</span><span class="n">n_samples_train</span><span class="p">]</span>
-<span class="n">test_indices</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="n">n_samples_test</span><span class="p">:]</span>
+<span class="n">test_indices</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="n">n_samples_train</span><span class="p">:]</span>
 
 <span class="n">train_set</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_indices</span><span class="p">]</span>
 <span class="n">test_set</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">test_indices</span><span class="p">]</span>
@@ -13678,7 +13678,7 @@ $$
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="&#128161;-Model-&amp;-Learning-Method-Suggestion">&#128161; Model &amp; Learning Method Suggestion<a class="anchor-link" href="#&#128161;-Model-&amp;-Learning-Method-Suggestion">&#182;</a></h2><h3 id="Model">Model<a class="anchor-link" href="#Model">&#182;</a></h3><p>In this case the model is in fact all possible solutions which is any set of $K$ 2D points.</p>
-<h3 id="Learning-Method:-K-Means">Learning Method: K-Means<a class="anchor-link" href="#Learning-Method:-K-Means">&#182;</a></h3><p>To solve this problem, we will use K-means. Note that K-means does not actually solve our exact problem since it minimizes the average <strong>squared</strong> Euclidean distance and not the average Euclidean distance itself. Sadly, there is no efficient solution for solving our exact problem.</p>
+<h3 id="Learning-Method:-K-Means">Learning Method: K-Means<a class="anchor-link" href="#Learning-Method:-K-Means">&#182;</a></h3><p>To solve this problem, we will use K-means. Note that K-means does not actually solve our exact problem since it minimizes the average <strong>squared</strong> Euclidean distance and not the average Euclidean distance itself. There are some more complicated algorithms for solving our exact problem, but for now we will stick to K-means.</p>
 <p>This is, in fact, a common case where we do not have an efficient way to solve our exact so we solve a very similar problem with the understanding that the result which we will get will probably not be the optimal solution, but we hope that it will at least produce a satisfactory result.</p>
 
 </div>
@@ -14106,10 +14106,10 @@ $$
 
  
  
-<div id="36b3cfc1-7aca-4b1b-a781-092943200c28"></div>
+<div id="5d2c826e-f97c-4b89-8cfe-b652a567681e"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#36b3cfc1-7aca-4b1b-a781-092943200c28');
+var element = $('#5d2c826e-f97c-4b89-8cfe-b652a567681e');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"version_major": 2, "version_minor": 0, "model_id": "966aaccd8a464b618d84933534241a85"}
@@ -14345,10 +14345,10 @@ The train risk is 308.27 k$
 
  
  
-<div id="9b34538f-cb0d-4438-ad9d-5f221132c050"></div>
+<div id="5522ec84-1c38-47d1-bd1d-22094b7d877d"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#9b34538f-cb0d-4438-ad9d-5f221132c050');
+var element = $('#5522ec84-1c38-47d1-bd1d-22094b7d877d');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
 {"version_major": 2, "version_minor": 0, "model_id": "e1fedaaf9e5c4fb59ece78b0a568626a"}
