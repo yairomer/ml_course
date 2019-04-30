@@ -1,5 +1,11 @@
 /* Fonts */
 /* ===== */
+/* Ultra */
+@import url('https://fonts.googleapis.com/css?family=Ultra');
+
+/* Source Sans Pro */
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
 /* Chalkboard font: KG Second Chances Sketch */
 @font-face {font-family: "KG Second Chances Sketch";
     src: url("https://db.onlinewebfonts.com/t/7de4544cc3e616ff945907bf07e2f271.eot"); /* IE9*/
@@ -9,12 +15,6 @@
     url("https://db.onlinewebfonts.com/t/7de4544cc3e616ff945907bf07e2f271.ttf") format("truetype"), /* chrome firefox opera Safari, Android, iOS 4.2+*/
     url("https://db.onlinewebfonts.com/t/7de4544cc3e616ff945907bf07e2f271.svg#KG Second Chances Sketch") format("svg"); /* iOS 4.1- */
 }
-
-/* Ultra */
-@import url('https://fonts.googleapis.com/css?family=Ultra');
-
-/* Source Sans Pro */
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
 /* reveal.js */
 /* ========= */
@@ -137,7 +137,7 @@
     margin-top:0px !important;
     font-size:35px;
     line-height:2;
-    font-family:Ultra;
+    font-family:'Ultra';
     /* color:white; */
     font-weight:normal;
 }
