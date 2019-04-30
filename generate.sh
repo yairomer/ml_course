@@ -18,3 +18,6 @@ jupyter nbconvert --to html --output-dir=$repo_dir/html/ $repo_dir/workshops/wor
 
 ## Slide to pdf
 # `npm bin`/decktape reveal -s 1440x900 http://localhost:8080/slides/workshop.html?id=01 /tmp/workshop_01.pdf 
+
+## Assignment 1
+jq --indent 1 '(.cells[] | select(has("outputs")) | .outputs) = []' $repo_dir/assignments/homework_1.ipynb > $repo_dir/assignments/homework_1_test.ipynb
