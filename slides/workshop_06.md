@@ -178,7 +178,7 @@ $$`
 - Estimate the covariance matrix:
 
 `$$
-\Sigma = \frac{1}{N}\sum_{i}\left(\boldsymbol{x}_i-\boldsymbol{\mu}_i\right)\left(\boldsymbol{x}_i-\boldsymbol{\mu}_i\right)^T
+\Sigma = \frac{1}{N}\sum_{i}\left(\boldsymbol{x}_i-\boldsymbol{\mu}_{y_i}\right)\left(\boldsymbol{x}_i-\boldsymbol{\mu}_{y_i}\right)^T
 $$`
 
 ---new slide---
@@ -218,7 +218,7 @@ Where:
 - Now:
 
 `$$
-\Sigma_j = \frac{1}{N_J}\sum_{i\ \text{s.t.}\ y_i=j}\left(\boldsymbol{x}_i-\boldsymbol{\mu}_i\right)\left(\boldsymbol{x}_i-\boldsymbol{\mu}_i\right)^T
+\Sigma_j = \frac{1}{N_J}\sum_{i\ \text{s.t.}\ y_i=j}\left(\boldsymbol{x}_i-\boldsymbol{\mu}_j\right)\left(\boldsymbol{x}_i-\boldsymbol{\mu}_j\right)^T
 $$`
 
 ---new slide---

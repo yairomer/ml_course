@@ -13246,7 +13246,7 @@ $$<ol>
 <li>Estimate the covariance matrix as:</li>
 </ol>
 $$
-\Sigma = \frac{1}{N}\sum_{i}\left(\boldsymbol{x}_i-\boldsymbol{\mu}_i\right)\left(\boldsymbol{x}_i-\boldsymbol{\mu}_i\right)^T
+\Sigma = \frac{1}{N}\sum_{i}\left(\boldsymbol{x}_i-\boldsymbol{\mu}_{y_i}\right)\left(\boldsymbol{x}_i-\boldsymbol{\mu}_{y_i}\right)^T
 $$<p>It can then be shown that:</p>
 $$
 \begin{align*}
@@ -13275,7 +13275,7 @@ $$<p>Where:</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="&#127766;-Quadric-Discriminant-Analysis-(QDA)">&#127766; Quadric Discriminant Analysis (QDA)<a class="anchor-link" href="#&#127766;-Quadric-Discriminant-Analysis-(QDA)">&#182;</a></h2><p>QDA is similar to LDA except for the the fact that we no longer assume that the covariance matrix $\Sigma$ is the same for all classes. The difference in the algorithm is that in the third step we independently estimate a covariance matrix for each of the class:</p>
 $$
-\Sigma_j = \frac{1}{N_j}\sum_{i\ \text{s.t.}\ y_i=j}\boldsymbol{x}_i\boldsymbol{x}_i^T
+\Sigma_j = \frac{1}{N_j}\sum_{i\ \text{s.t.}\ y_i=j}\left(\boldsymbol{x}_i-\boldsymbol{\mu}_j\right)\left(\boldsymbol{x}_i-\boldsymbol{\mu}_j\right)^T
 $$<p>The resulting decision function is:</p>
 $$
 \begin{align*}
