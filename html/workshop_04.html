@@ -13645,12 +13645,12 @@ $$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">n_samples</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 
-<span class="c1">## Generate a random generator with a fixed seed</span>
+<span class="c1">## Generate a random generator with a fixed seed (this is important to make our result reproducible)</span>
 <span class="n">rand_gen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1">## Generating a vector of indices</span>
@@ -13661,7 +13661,6 @@ $$
 
 <span class="c1">## Split the indices into 80% train / 20% test</span>
 <span class="n">n_samples_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">)</span>
-<span class="n">n_samples_test</span> <span class="o">=</span> <span class="n">n_samples</span> <span class="o">-</span> <span class="n">n_samples_train</span>
 <span class="n">train_indices</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[:</span><span class="n">n_samples_train</span><span class="p">]</span>
 <span class="n">test_indices</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="n">n_samples_train</span><span class="p">:]</span>
 
@@ -13670,6 +13669,33 @@ $$
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-1-1a4f4aa4f2f6&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span>n_samples <span class="ansi-blue-fg">=</span> len<span class="ansi-blue-fg">(</span>dataset<span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> 
+<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-red-fg">## Generate a random generator with a fixed seed (this is important to make our result reproducible)</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> rand_gen <span class="ansi-blue-fg">=</span> np<span class="ansi-blue-fg">.</span>random<span class="ansi-blue-fg">.</span>RandomState<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> 
+
+<span class="ansi-red-fg">NameError</span>: name &#39;dataset&#39; is not defined</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -14106,13 +14132,13 @@ $$
 
  
  
-<div id="2e761694-f87a-461d-8e70-cf20af2cd506"></div>
+<div id="db6be15d-cc9d-4b61-945d-d0385c3b47cc"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#2e761694-f87a-461d-8e70-cf20af2cd506');
+var element = $('#db6be15d-cc9d-4b61-945d-d0385c3b47cc');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "966aaccd8a464b618d84933534241a85", "version_minor": 0, "version_major": 2}
+{"version_major": 2, "model_id": "966aaccd8a464b618d84933534241a85", "version_minor": 0}
 </script>
 </div>
 
@@ -14345,13 +14371,13 @@ The train risk is 308.27 k$
 
  
  
-<div id="bd4674f9-9c23-4d48-b6dd-00b96be08ad5"></div>
+<div id="282ec4ce-2d46-4f9d-964c-691027ca4495"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#bd4674f9-9c23-4d48-b6dd-00b96be08ad5');
+var element = $('#282ec4ce-2d46-4f9d-964c-691027ca4495');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "e1fedaaf9e5c4fb59ece78b0a568626a", "version_minor": 0, "version_major": 2}
+{"version_major": 2, "model_id": "e1fedaaf9e5c4fb59ece78b0a568626a", "version_minor": 0}
 </script>
 </div>
 

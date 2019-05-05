@@ -14164,7 +14164,7 @@ $$
 <span class="c1">## Shuffle the indices</span>
 <span class="n">rand_gen</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
 
-<span class="c1">## Split the indices into 80% train / 20% test</span>
+<span class="c1">## Split the indices into 60% train / 20% validation / 20% test</span>
 <span class="n">n_samples_train</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">*</span> <span class="mf">0.6</span><span class="p">)</span>
 <span class="n">n_samples_validation</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">)</span>
 <span class="n">n_samples_test</span> <span class="o">=</span> <span class="n">n_samples</span> <span class="o">-</span> <span class="n">n_samples_train</span>
