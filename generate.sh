@@ -19,8 +19,11 @@ jupyter nbconvert --to html --output-dir=$repo_dir/html/ $repo_dir/workshops/wor
 ## Workshop 6
 jupyter nbconvert --to html --output-dir=$repo_dir/html/ $repo_dir/workshops/workshop_06.ipynb
 
-## Workshop 6
+## Workshop 7
 jupyter nbconvert --to html --output-dir=$repo_dir/html/ $repo_dir/workshops/workshop_07.ipynb
+
+## Workshop 7
+jupyter nbconvert --to html --output-dir=$repo_dir/html/ $repo_dir/workshops/workshop_08.ipynb
 
 ## Slide to pdf
 # `npm bin`/decktape reveal -s 1440x900 http://localhost:8080/slides/workshop.html?id=01 /tmp/workshop_01.pdf 
