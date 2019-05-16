@@ -13720,13 +13720,12 @@ Where $\varepsilon$ is some pre-defined small constant which is usually referred
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="&#128220;-Problem-Definition---Same-as-before,-written-differently">&#128220; Problem Definition - Same as before, written differently<a class="anchor-link" href="#&#128220;-Problem-Definition---Same-as-before,-written-differently">&#182;</a></h2><p>For the given random system:</p>
+<h2 id="&#128220;-Problem-Definition---Same-as-before,-written-differently">&#128220; Problem Definition - Same as before, written differently<a class="anchor-link" href="#&#128220;-Problem-Definition---Same-as-before,-written-differently">&#182;</a></h2><p>For the following given random system:</p>
 <ul>
 <li>Random sample: $\omega$ - A sampled tissue drawn from some unknown distribution of all possible tissues.</li>
 <li>Random variables:<ul>
 <li>$x_0=X_0\left(\omega\right)$: The average radius of the cells in the sample.</li>
 <li>$x_1=X_1\left(\omega\right)$: The average standard deviation of gray-scale values of the cells in the sample.</li>
-<li>$x_2=X_2\left(\omega\right)$: The average perimeter of the cells in the sample.</li>
 <li>$y=Y\left(\omega\right)$: Whether the sample is 1 - cancerous (malignant) or 0 - not cancerous (benign).</li>
 </ul>
 </li>
@@ -13801,16 +13800,16 @@ $$<p>Where $g\left(x\right)=\frac{1}{1-e^{-x}}$ is the logistic function.</p>
 $$
 \begin{align*}
 \boldsymbol{\theta}^*
-&amp; = \underset{\boldsymbol{\theta}}{\arg\max}\ \mathcal{L}\left(\boldsymbol{\theta};\left\{y_i,\boldsymbol{x}_i\right\}\right) \\
+&amp; = \underset{\boldsymbol{\theta}}{\arg\max}\ \mathcal{L}\left(\boldsymbol{\theta};\left\{\boldsymbol{x}_i,y_i\right\}\right) \\
 &amp; = \underset{\boldsymbol{\theta}}{\arg\min}\ -l\left(\boldsymbol{\theta};\left\{y_i,\boldsymbol{x}_i\right\}\right) \\
 &amp; = \underset{\boldsymbol{\theta}}{\arg\min}-\sum_i\log\left(p\left(y_i|\boldsymbol{x}_i;\boldsymbol{\theta}\right)\right) \\
 &amp; = \underset{\boldsymbol{\theta}}{\arg\min}-\sum_i\log\left(p\left(1|\boldsymbol{x}_i;\boldsymbol{\theta}\right)\right)I\left\{y_i=1\right\} + \log\left(1-p\left(1|\boldsymbol{x}_i;\boldsymbol{\theta}\right)\right)I\left\{y_i=0\right\} \\
-&amp; = \underset{\boldsymbol{\theta}}{\arg\min}-\frac{1}{N}\sum_i\log\left(g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\right)y_i + \log\left(1-g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\right)\left(1-y_i\right) \\
+&amp; = \underset{\boldsymbol{\theta}}{\arg\min}\underbrace{-\frac{1}{N}\sum_i\log\left(g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\right)y_i + \log\left(1-g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\right)\left(1-y_i\right)}_{=h\left(\boldsymbol{\theta};\left\{\boldsymbol{x}_i,y_i\right\}\right)} \\
 \end{align*}
 $$<p>Just for convenience, we have added a normalization by the number of samples, $\frac{1}{N}$, which does not change the optimization problem, but prevents the objective function (and it's gradient) from scaling up with the number of samples.</p>
-<p>We shall denote</p>
+<p>We have defined:</p>
 $$
-h\left(\boldsymbol{\theta}\right)=-\frac{1}{N}\sum_i\log\left(g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\right)y_i + \log\left(1-g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\right)\left(1-y_i\right)
+h\left(\boldsymbol{\theta};\left\{\boldsymbol{x}_i,y_i\right\}\right)=-\frac{1}{N}\sum_i\log\left(g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\right)y_i + \log\left(1-g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\right)\left(1-y_i\right)
 $$<p>($h$ here is not the discrimination function)</p>
 
 </div>
@@ -13822,11 +13821,16 @@ $$<p>($h$ here is not the discrimination function)</p>
 <h3 id="Basic-gradient-descent">Basic gradient descent<a class="anchor-link" href="#Basic-gradient-descent">&#182;</a></h3><p>To solve this optimization problem, we shall implement the basic gradient descent solver:</p>
 <ol>
 <li>Start from a random vector of parameters $\boldsymbol{\theta}^{\left(0\right)}$</li>
-<li>In each iteration update $\boldsymbol{\theta}$ according to:</li>
-</ol>
+<li>In each iteration update $\boldsymbol{\theta}$ according to:
 $$
 \boldsymbol{\theta}^{\left(k+1\right)}=\boldsymbol{\theta}^{\left(k\right)} - \alpha\nabla_\theta h\left(\boldsymbol{\theta^{\left(k\right)}}\right)
-$$<p>To calculate $\nabla_\theta f\left(\boldsymbol{\theta^{\left(k\right)}}\right)$ we shall use the following properties:</p>
+$$</li>
+<li>Stop when:
+$$
+\left|h\left(\boldsymbol{\theta^{\left(k+1\right)}}\right) - h\left(\boldsymbol{\theta^{\left(k\right)}}\right)\right| &lt; \varepsilon
+$$</li>
+</ol>
+<p>To calculate $\nabla_\theta f\left(\boldsymbol{\theta^{\left(k\right)}}\right)$ we shall use the following properties:</p>
 <ul>
 <li>$\frac{d}{dx}g\left(x\right)=g\left(x\right)\left(1-g\left(x\right)\right)$</li>
 <li>$\frac{d}{dx}\log\left(g\left(x\right)\right)=1-g\left(x\right)$</li>
@@ -13835,15 +13839,12 @@ $$<p>To calculate $\nabla_\theta f\left(\boldsymbol{\theta^{\left(k\right)}}\rig
 </ul>
 <p>Therefore:
 $$
-\nabla_\theta h\left(\boldsymbol{\theta}\right)=-\frac{1}{N}\sum_i\left(\left(1-g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\right)y_i - g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\left(1-y_i\right)\right)\boldsymbol{x}_i\\
-=\frac{1}{N}\sum_i\left(g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)-y_i\right)\boldsymbol{x}_i
+\begin{align*}
+\nabla_\theta h\left(\boldsymbol{\theta}\right)
+&amp; = -\frac{1}{N}\sum_i\left(\left(1-g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\right)y_i - g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)\left(1-y_i\right)\right)\boldsymbol{x}_i \\
+&amp; = \frac{1}{N}\sum_i\left(g\left(\boldsymbol{\theta}^T \boldsymbol{x}\right)-y_i\right)\boldsymbol{x}_i
+\end{align*}
 $$</p>
-<ol>
-<li>We will stop when:
-$$
-\left|h\left(\boldsymbol{\theta^{\left(k+1\right)}}\right) - h\left(\boldsymbol{\theta^{\left(k\right)}}\right)\right| &lt; \varepsilon
-$$</li>
-</ol>
 <h3 id="Early-stop-as-a-regularization">Early stop as a regularization<a class="anchor-link" href="#Early-stop-as-a-regularization">&#182;</a></h3><p>A common practice in machine learning when using gradient descent is to test the stop criteria on a validation set. In many cases, this prevents the model from converging an overfitted solution.</p>
 
 </div>
@@ -13881,36 +13882,36 @@ $$</li>
 <span class="n">x_tilde_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">x_val</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_samples_validation</span><span class="p">,</span> <span class="mi">1</span><span class="p">))),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">x_tilde_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">x_test</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_samples_test</span><span class="p">,</span> <span class="mi">1</span><span class="p">))),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1">## The objection function</span>
+<span class="c1">## The objective function</span>
 <span class="c1">## ======================</span>
 <span class="c1">## Define the logistice function</span>
 <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span>
 
 <span class="c1">## Define the objective function</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="n">dot_product</span> <span class="o">=</span> <span class="n">x_tilde</span> <span class="o">@</span> <span class="n">theta</span>
     <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">dot_product</span><span class="p">))</span> <span class="o">*</span> <span class="n">y</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">g</span><span class="p">(</span><span class="n">dot_product</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span> <span class="n">y</span><span class="p">))</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 
-<span class="c1">## Define the gradient of f</span>
-<span class="k">def</span> <span class="nf">grad_f</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="c1">## Define the gradient of h</span>
+<span class="k">def</span> <span class="nf">grad_h</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
     <span class="n">dot_product</span> <span class="o">=</span> <span class="n">x_tilde</span> <span class="o">@</span> <span class="n">theta</span>
     <span class="k">return</span> <span class="p">((</span><span class="n">g</span><span class="p">(</span><span class="n">dot_product</span><span class="p">)</span> <span class="o">-</span> <span class="n">y_train</span><span class="p">)[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">x_tilde</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
 <span class="c1">## The gradient decent algorithm</span>
 <span class="c1">## =============================</span>
-<span class="k">def</span> <span class="nf">basic_gradient_decent</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">store_every</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">basic_gradient_decent</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">grad_h</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span> <span class="n">store_every</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="c1">## Initialize theta</span>
-    <span class="n">theta0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x_tilde_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="n">theta0</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">x_tilde_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
     <span class="c1">## Calucalte the initial objective</span>
-    <span class="n">last_objective</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+    <span class="n">last_objective</span> <span class="o">=</span> <span class="n">h</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
 
     <span class="c1">## Initialize lists to store intermidiate results for plotting</span>
     <span class="n">steps_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">theta_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">theta</span><span class="o">.</span><span class="n">copy</span><span class="p">()]</span>
-    <span class="n">objective_list_train</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)]</span>
-    <span class="n">objective_list_val</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)]</span>
+    <span class="n">objective_list_train</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)]</span>
+    <span class="n">objective_list_val</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)]</span>
 
     <span class="c1">## Perforing the update steps</span>
     <span class="n">i_iter</span> <span class="o">=</span> <span class="mi">0</span>
@@ -13918,17 +13919,17 @@ $$</li>
         <span class="n">i_iter</span> <span class="o">+=</span> <span class="mi">1</span>
 
         <span class="c1">## Update theta</span>
-        <span class="n">theta</span> <span class="o">-=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">grad_f</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="n">theta</span> <span class="o">-=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">grad_h</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
         <span class="c1">## Calculate the new objective</span>
-        <span class="n">objective</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+        <span class="n">objective</span> <span class="o">=</span> <span class="n">h</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
 
         <span class="c1">## Store intermidiate results</span>
         <span class="k">if</span> <span class="n">i_iter</span> <span class="o">%</span> <span class="n">store_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">steps_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i_iter</span><span class="p">)</span>
             <span class="n">theta_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">theta</span><span class="o">.</span><span class="n">copy</span><span class="p">())</span>
-            <span class="n">objective_list_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
-            <span class="n">objective_list_val</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">))</span>
+            <span class="n">objective_list_train</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+            <span class="n">objective_list_val</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">h</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">x_tilde_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">))</span>
 
         <span class="c1">## Check the stop criteria</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">objective</span> <span class="o">-</span> <span class="n">last_objective</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">i_iter</span> <span class="o">==</span> <span class="n">max_iter</span><span class="p">):</span>
@@ -13974,7 +13975,7 @@ $$</li>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Selecting-the-learning-rate">Selecting the learning rate<a class="anchor-link" href="#Selecting-the-learning-rate">&#182;</a></h3><p>We shall start by running for only 1000 steps in order to select the learning rate. We shall test the following learning rates $\alpha=10^{-1},10^{-2},10^{-3}$.</p>
+<h3 id="Selecting-the-learning-rate">Selecting the learning rate<a class="anchor-link" href="#Selecting-the-learning-rate">&#182;</a></h3><p>In order to select the learning rate we shall run the algorithm for only 1000 steps with different learning rates. We shall test the following learning rates $\alpha=10^{-1},10^{-2},10^{-3}$.</p>
 <p>We shall use a tolerance of $10^{-6}$, which results in a reasonable runtime. Basically, we would like to select the tolerance as small as possible.</p>
 
 </div>
@@ -14092,7 +14093,7 @@ $$</li>
 <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">100000</span>
 <span class="n">alpha</span> <span class="o">=</span> <span class="mf">1e-2</span>
 
-<span class="n">theta</span> <span class="o">=</span> <span class="n">basic_gradient_decent</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">grad_f</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">basic_gradient_decent</span><span class="p">(</span><span class="n">h</span><span class="p">,</span> <span class="n">grad_h</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">)</span>
 
 <span class="c1">## Evaluate the risk on the train set</span>
 <span class="n">train_prediction</span> <span class="o">=</span> <span class="n">x_tilde_train</span> <span class="o">@</span> <span class="n">theta</span> <span class="o">&gt;</span> <span class="mi">0</span>
@@ -14251,8 +14252,8 @@ $$</li>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Using-scikit-learn---SGDClassifier">Using scikit-learn - SGDClassifier<a class="anchor-link" href="#Using-scikit-learn---SGDClassifier">&#182;</a></h2><p>To calculate the parameters of the linear logistic regression using the gradient descent method we can use <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html">sklearn.linear_model.SGDClassifier</a>.</p>
-<h3 id="SGD">SGD<a class="anchor-link" href="#SGD">&#182;</a></h3><p>The name <strong>SGD</strong> stands for <strong>Stochastic Gradient Descent</strong>, which differs from the basic gradient descent in the fact that in each update step only one sample from the dataset is used instead of the entire dataset. The single samples are selected in each step randomly from the dataset.</p>
+<h2 id="Using-scikit-learn---SGDClassifier">Using scikit-learn - SGDClassifier<a class="anchor-link" href="#Using-scikit-learn---SGDClassifier">&#182;</a></h2><p>The <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.SGDClassifier.html">sklearn.linear_model.SGDClassifier</a> class implements, among others, the linear logistic regression method using a Stochastic Gradient Descent (SGD) optimization. We shall point out a few notes regarding this class:</p>
+<h3 id="Stochastic-Gradient-Descent-(SGD)">Stochastic Gradient Descent (SGD)<a class="anchor-link" href="#Stochastic-Gradient-Descent-(SGD)">&#182;</a></h3><p><strong>Stochastic Gradient Descent</strong> differs from the basic gradient descent in the fact that in each update step only one sample from the dataset is used instead of the entire dataset. The single samples are selected in each step randomly from the dataset.</p>
 <h3 id="Selecting-the-loss-function">Selecting the loss function<a class="anchor-link" href="#Selecting-the-loss-function">&#182;</a></h3><p>This class supports a range of linear models which can be selected using the <strong>loss</strong> argument. The linear logistic model can be selected be setting: <strong>loss='log'</strong>.</p>
 <h3 id="Regularization">Regularization<a class="anchor-link" href="#Regularization">&#182;</a></h3><p>By default, <strong>SGDClassifier</strong> adds an $L2$ regularization term. Different regularization terms can be selected using the <strong>penalty</strong> argument, including <strong>penalty='none'</strong> for no regularization.</p>
 <h3 id="Adaptive-learning-rates">Adaptive learning rates<a class="anchor-link" href="#Adaptive-learning-rates">&#182;</a></h3><p>By default, <strong>SGDClassifier</strong> uses a slightly more sophisticated version of the gradient descent algorithm, in which the learning rate changes over time. The manner in which the learning rate changes can be define using the <strong>learning_rate</strong> argument, including <strong>learning_rate='constant'</strong>.</p>
@@ -14359,7 +14360,7 @@ $$</li>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Using-scikit-learn---LogisticRegression">Using scikit-learn - LogisticRegression<a class="anchor-link" href="#Using-scikit-learn---LogisticRegression">&#182;</a></h2><p>Specifically, for the case of linear logistic regression, there exist some more optimal optimization solutions. We will not discuss them here, but we will introduce the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">sklearn.linear_model.LogisticRegression</a> class which uses these algorithms to train a linear logistic regression model.</p>
+<h2 id="Using-scikit-learn---LogisticRegression">Using scikit-learn - LogisticRegression<a class="anchor-link" href="#Using-scikit-learn---LogisticRegression">&#182;</a></h2><p>Specifically, for the case of linear logistic regression, there exist some more optimal optimization algorithms. We will not discuss them here, but we will introduce the <a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html">sklearn.linear_model.LogisticRegression</a> class which uses these algorithms to train a linear logistic regression model.</p>
 <p>Like in the case of <strong>SGDClassifier</strong>, we will use <strong>penalty='none'</strong>. We will use an optimizer called <strong>lbfgs</strong> to solve the optimization problem.</p>
 
 </div>
@@ -14876,6 +14877,14 @@ We will plot the training risk along with the validation risk as a function of t
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see here that adding an $L1$ regularization indeed result in a sparser result.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
