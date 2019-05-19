@@ -31,3 +31,7 @@ jupyter nbconvert --to html --output-dir=$repo_dir/html/ $repo_dir/workshops/wor
 ## Assignment 1
 jq --indent 1 '(.cells[] | select(has("outputs")) | .outputs) = [] | .cells[].metadata = {} | ((.cells[] | select(has("execution_count")) | .execution_count) = null)' $repo_dir/assignments/homework_1.ipynb > $repo_dir/assignments/homework_1.ipynb.tmp
 mv $repo_dir/assignments/homework_1.ipynb.tmp $repo_dir/assignments/homework_1.ipynb
+jq --indent 1 '(.cells[] | select(has("outputs")) | .outputs) = [] | .cells[].metadata = {} | ((.cells[] | select(has("execution_count")) | .execution_count) = null)' $repo_dir/assignments/homework_2.ipynb > $repo_dir/assignments/homework_2.ipynb.tmp
+mv $repo_dir/assignments/homework_2.ipynb.tmp $repo_dir/assignments/homework_2.ipynb
+jq --indent 1 '(.cells[] | select(has("outputs")) | .outputs) = [] | .cells[].metadata = {} | ((.cells[] | select(has("execution_count")) | .execution_count) = null)' $repo_dir/assignments/homework_3.ipynb > $repo_dir/assignments/homework_3.ipynb.tmp
+mv $repo_dir/assignments/homework_3.ipynb.tmp $repo_dir/assignments/homework_3.ipynb
