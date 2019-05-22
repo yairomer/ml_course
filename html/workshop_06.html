@@ -13253,7 +13253,7 @@ $$
 h^*\left(x\right) 
 &amp; = \underset{y}{\arg\max}\ p\left(y|x\right) \\
 &amp; = \underset{y}{\arg\max}\ p\left(x|y\right)p\left(y\right) \\
-&amp; = \underset{y}{\arg\min}\ \tfrac{1}{2}\left(\boldsymbol{\mu}_y-\boldsymbol{x}\right)^T\Sigma^{-1}\left(\boldsymbol{\mu}_y-\boldsymbol{x}\right) + \log\left(p\left(y\right)\right) \\
+&amp; = \underset{y}{\arg\min}\ \tfrac{1}{2}\left(\boldsymbol{\mu}_y-\boldsymbol{x}\right)^T\Sigma^{-1}\left(\boldsymbol{\mu}_y-\boldsymbol{x}\right) - \log\left(p\left(y\right)\right) \\
 &amp; =
 \begin{cases}
 1\qquad \boldsymbol{a}^T \boldsymbol{x} + b &gt; 0 \\
