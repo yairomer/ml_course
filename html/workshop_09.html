@@ -13144,14 +13144,14 @@ $$<p>Where $\varphi$ is the non-linear function, called the activation function.
 <ul>
 <li>The logistic function. Also commonly referred to as a sigmoid: $\varphi\left(x\right)=\frac{1}{1+e^-x}$</li>
 <li>Hyperbolic tangent: $\varphi\left(x\right)=\tanh\left(x/2\right)$</li>
-<li>Rectifier function (known as ReLU (Rectified Linear Unit): $\varphi\left(x\right)=\max\left(x,0\right)$</li>
+<li>Rectifier function (known as ReLU (Rectified Linear Unit)): $\varphi\left(x\right)=\max\left(x,0\right)$</li>
 </ul>
+<p>Units which are not connected directly to the output, i.e., are not at the end of the network, are called <strong>hidden units</strong>. A network which contains routes that paths which connect the input to the output through multiple hidden units are usually referred to as <strong>Deep Neural Networks (DNN)</strong>.</p>
 <p>The way in which the neurons are connected is usually called the architecture of the network. We can distinguish between two types of networks:</p>
 <ul>
 <li><strong>Feed-forward networks</strong>: in which data in the network flow in a directed manner, from the input to the output without creating any loops.</li>
 <li><strong>recurrent networks</strong>: In which the architectures might contain cyclic paths. These networks are outside the scope of this course.</li>
 </ul>
-<p>Units which are not connected directly to the output, i.e., are not at the end of the network, are called <strong>hidden units</strong>. A network which contains routes that paths which connect the input to the output through multiple hidden layers are usually referred to as <strong>Deep Neural Networks (DNN)</strong>.</p>
 <p>In the context of machine learning, we will try to adjust the parameters of the network based on the collected data. In feed-forward networks, this is usually done using gradients descent methods which are calculated using <strong>back propagation</strong>.</p>
 
 </div>
@@ -14673,19 +14673,6 @@ $$</p>
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -14748,6 +14735,7 @@ $$</p>
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Important-but-not-covered">Important but not covered<a class="anchor-link" href="#Important-but-not-covered">&#182;</a></h2><ul>
+<li><strong><a href="">Parameters initilization</a></strong>: PyTorch provides a set of functions for initializing the network's parameters which is found play an important rule in the convergence and performance of the network.</li>
 <li><strong><a href="https://pytorch.org/tutorials/beginner/data_loading_tutorial.html">Datasets and DataLoader</a></strong>: Two PyTorch classes to handle the data loading and management, and for running over batches of data.</li>
 <li><strong><a href="https://pytorch.org/docs/stable/nn.html#torch.nn.Sequential">torch.nn.Sequential</a></strong>: A very elegant and simple way to stack a few modules (usually network layers) into a single module.</li>
 <li><strong><a href="https://pytorch.org/docs/stable/torchvision/index.html">torchvision</a></strong>: An additional package (which is part of the PyTorch project) which adds some tools to PyTorch which are commonly uses in computer vision.</li>
