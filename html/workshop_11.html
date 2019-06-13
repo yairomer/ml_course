@@ -13177,7 +13177,7 @@ $$</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Soft-SVM">Soft SVM<a class="anchor-link" href="#Soft-SVM">&#182;</a></h3><p>In the case where the classes are not linearly separable, we can use a modified problem by introducing a set of slack variables $\left{\xi_i\}$ which releases the constraint for a perfect classification with a strict margin.</p>
+<h3 id="Soft-SVM">Soft SVM<a class="anchor-link" href="#Soft-SVM">&#182;</a></h3><p>In the case where the classes are not linearly separable, we can use a modified problem by introducing a set of slack variables $\left\{\xi_i\right\}$ which releases the constraint for a perfect classification with a strict margin.</p>
 <p>The primal problem is this case will be:
 $$
 \boldsymbol{w}^*,b^*=\underset{\boldsymbol{w},b}{\arg\min} \frac{1}{2}\left\lVert\boldsymbol{w}\right\rVert^2+C\sum_i\xi_i \\
@@ -13896,7 +13896,7 @@ $$
 <li>The data describes a variant of different features measured in different units with different scales.</li>
 <li>Soft SVM tries to minimize a distance based objective in which makes him sensitive to the absolute distance in each direction. For example, if we scale up one of the features by a constant value, we will be giving him extra weight in the objecting function.</li>
 </ol>
-<p>We will calculate the normalization parameters on the test set and then apply it to all of the data.</p>
+<p>We will calculate the normalization parameters on the train set and then apply it to all of the data.</p>
 
 </div>
 </div>
